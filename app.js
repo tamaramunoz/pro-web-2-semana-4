@@ -38,8 +38,23 @@ function notificationPush(mensaje) {
   }, 3000);
 }
 
+function cargarStockEnFormulario() {
+  const selectProducto = document.getElementById("producto");
+  
+  if (selectProducto) {
+    stocktaking.forEach(producto => {
+      const option = document.createElement("option");
+
+      option.value = producto.nombre; 
+      option.textContent = `${producto.nombre} ($${producto.calculateFinalPrice().toLocaleString('es-CL')})`;
+      selectProducto.appendChild(option);
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   searchProducts();
+  cargarStockEnFormulario();
   
   setTimeout(() => {
     notificationPush("¡Promoción exclusiva! 15% de descuento usando el código WEB2.");

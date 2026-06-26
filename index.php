@@ -25,10 +25,10 @@
 
     <div id="results-container"></div>
 
-    <hr style="max-width: 800px; margin: 40px auto; border: 0; border-top: 1px dashed #ccc;">
+    <hr class="section-divider">
 
     <?php
-    // función PHP para formatear y renderizar las reseñas
+    // función PHP para generar y renderizar las reseñas
     function generarTarjetaResena($usuario, $calificacion, $comentario) {
         $calificacion = (int)$calificacion;
         if ($calificacion < 1) $calificacion = 1;
@@ -40,11 +40,85 @@
 
         return "
         <div class='review-card'>
-            <h4>Usuario: {$usuarioLimpio} <span>{$estrellas}</span></h4>
+            <h4>Usuario: {$usuarioLimpio} <span class='review-stars'>{$estrellas}</span></h4>
             <p>{$comentarioLimpio}</p>
         </div>";
     }
     ?>
+
+    <div>
+      <div class="reviews-section">
+        <h3>Calificar Producto Comprado</h3>
+        <form action="" method="POST">
+          <p>
+            <label for="usuario">Nombre de Usuario:</label><br>
+            <input type="text" id="usuario" name="usuario" required>
+          </p>
+          <p>
+            <label for="calificacion">Calificación (1 al 5):</label><br>
+            <input type="number" id="calificacion" name="calificacion" min="1" max="5" required>
+          </p>
+          <p>
+              <label for="comentario">Tu Reseña:</label><br>
+              <textarea id="comentario" name="comentario" rows="3" required></textarea>
+          </p>
+          <input type="submit" name="enviar_resena" value="Publicar Reseña" class="btn-pedido">
+        </form>
+
+        <?php
+        // renderizado de la reseña en la página
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['enviar_resena'])) {
+            echo "<h4>Reseñas Recientes:</h4>";
+            echo generarTarjetaResena($_POST['usuario'], $_POST['calificacion'], $_POST['comentario']);
+        }
+        ?>
+      </div>
+    </div>
+
+    <div class="pedido-container">
+      <h2>Formulario de Registro de Pedidos</h2>
+      
+      <form action="procesar_pedido.php" method="POST">
+         <p>
+            <label for="producto">Producto Solicitado:</label><br>
+            <select id="producto" name="producto" required>
+                <option value="">-- Seleccione un producto del catálogo --</option>
+            </select>
+         </p>
+          <p>
+            <label for="unidades">Unidades:</label><br>
+            <input type="number" id="unidades" name="unidades" min="1" required>
+          </p>
+          <p>
+              <label for="tipo_pedido">Tipo de Pedido:</label><br>
+              <select id="tipo_pedido" name="tipo_pedido" required>
+                  <option value="Normal">Despacho Normal (3 a 5 días)</option>
+                  <option value="Express">Envío Express de 24 horas</option>
+                  <option value="Internacional">Importación Internacional</option>
+              </select>
+          </p>
+          <p>
+              <label for="descripcion">Descripción del Pedido:</label><br>
+              <input 
+                type="text" 
+                id="descripcion" 
+                name="descripcion" 
+                placeholder="Ej: Pedido de consolas para sucursal" 
+                required>
+          </p>
+          <p>
+              <label for="observaciones">Observaciones Especiales:</label><br>
+              <textarea 
+                id="observaciones" 
+                name="observaciones" 
+                placeholder="Ej: Dejar con conserjería...">
+            </textarea>
+          </p>
+          <p class="pedido-footer">
+              <input type="submit" value="Registrar y Enviar Pedido" class="btn-pedido">
+          </p>
+      </form>
+    </div>
 
     <script src="producto.js"></script> 
     <script src="app.js"></script>
