@@ -1,6 +1,5 @@
 let carrito = [];
 
-// selección de elementos del DOM
 const searchInput = document.getElementById("product-search");
 const searchButton = document.getElementById("search-btn");
 const clearButton = document.getElementById("clear-btn");
@@ -8,7 +7,6 @@ const resultsContainer = document.getElementById("results-container");
 const cartCounter = document.getElementById("cart-counter");
 const notificationToast = document.getElementById("notification-toast");
 
-// sistema de búsqueda y filtrado
 function searchProducts() {
   const query = searchInput.value.toLowerCase().trim();
   resultsContainer.innerHTML = ""; 
@@ -31,7 +29,6 @@ function searchProducts() {
   vincularBotonesCarrito();
 }
 
-// manejador del flujo de notificaciones instantáneas
 function notificationPush(mensaje) {
   notificationToast.textContent = mensaje;
   notificationToast.style.display = "block";
@@ -41,7 +38,6 @@ function notificationPush(mensaje) {
   }, 3000);
 }
 
-// eventos del ciclo de vida y click
 document.addEventListener("DOMContentLoaded", () => {
   searchProducts();
   
@@ -50,16 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 2000);
 });
 
-// listener para el botón de Buscar
 searchButton.addEventListener("click", searchProducts);
 
-// listener para el botón de Limpiar
 clearButton.addEventListener("click", () => {
     searchInput.value = "";
     searchProducts();
 });
 
-// listener para presionar Enter en el teclado
 searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") searchProducts();
 });
